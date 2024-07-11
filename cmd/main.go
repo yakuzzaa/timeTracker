@@ -2,12 +2,20 @@ package main
 
 import (
 	"log"
+	_ "timeTracker/docs"
+	"timeTracker/internal/api"
+	"timeTracker/internal/api/handlers"
 	"timeTracker/internal/config"
 	"timeTracker/internal/storage"
 
 	"github.com/pressly/goose/v3"
 )
 
+// @title TimeTracker API
+// @version 1.0
+// @description API for time tracking app
+// @host localhost:8080
+// @BasePath /
 func main() {
 	configLoad := config.MustLoad()
 
@@ -28,9 +36,9 @@ func main() {
 
 	log.Println("Migrations applied successfully")
 
-	//handlers := handler.NewHandler(authClient, listClient, itemClient)
-	//srv := new(api.Server)
-	//if err := srv.Run(configLoad.Address, handlers.InitRoutes()); err != nil {
-	//	log.Fatalf("Something went wrong: %s", err)
-	//}
+	handler := handlers.NewHandler()
+	srv := new(api.Server)
+	if err := srv.Run(configLoad.Address, handler.InitRoutes()); err != nil {
+		log.Fatalf("Something went wrong: %s", err)
+	}
 }
