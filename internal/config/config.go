@@ -27,11 +27,13 @@ type Database struct {
 	DBUser     string `yaml:"db_user" env-required:"true"`
 	DBPassword string `yaml:"db_password" env-required:"true"`
 	DBName     string `yaml:"db_name" env-required:"true"`
+	Driver     string `yaml:"driver" env-required:"true"`
+	Dir        string `yaml:"dir" env-required:"true"`
 }
 
-func (c *Database) DSN() string {
+func (db *Database) DSN() string {
 	return fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		c.DBHost, c.DBPort, c.DBUser, c.DBPassword, c.DBName)
+		db.DBHost, db.DBPort, db.DBUser, db.DBPassword, db.DBName)
 }
 
 func MustLoad() *Config {
