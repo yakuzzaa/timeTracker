@@ -1,16 +1,19 @@
 package handlers
 
 import (
+	"timeTracker/internal/api/services"
+
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Handler struct {
+	services *services.Service
 }
 
-func NewHandler() *Handler {
-	return &Handler{}
+func NewHandler(services *services.Service) *Handler {
+	return &Handler{services: services}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
@@ -31,9 +34,9 @@ func (h *Handler) InitRoutes() *gin.Engine {
 		}
 		tasks := api.Group("/tasks")
 		{
-			tasks.GET("/:id", h.getTasks)
-			tasks.POST("/start_timing", h.startTiming)
-			tasks.PUT("/end_timing/:id", h.endTiming)
+			tasks.GET("/:user_id", h.getTasks)
+			tasks.POST("/start_timing/:user_id", h.startTiming)
+			tasks.PUT("/end_timing/:user_id", h.endTiming)
 		}
 
 	}

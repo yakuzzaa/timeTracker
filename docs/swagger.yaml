@@ -1,9 +1,185 @@
-basePath: /
+basePath: /api
+definitions:
+  serializers.CreateUserRequest:
+    properties:
+      passport:
+        type: string
+    required:
+    - passport
+    type: object
+  serializers.CreateUserResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  serializers.DeleteUserResponse:
+    properties:
+      status:
+        type: string
+    type: object
+  serializers.GetUsersResponse:
+    properties:
+      info:
+        items:
+          $ref: '#/definitions/serializers.User'
+        type: array
+    type: object
+  serializers.UpdateUserRequest:
+    properties:
+      address:
+        type: string
+      name:
+        type: string
+      passportNumber:
+        type: string
+      passportSeries:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
+  serializers.UpdateUserResponse:
+    properties:
+      status:
+        type: string
+    type: object
+  serializers.User:
+    properties:
+      address:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      passportNumber:
+        type: string
+      passportSeries:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
 host: localhost:8080
 info:
   contact: {}
   description: API for time tracking app
   title: TimeTracker API
   version: "1.0"
-paths: {}
+paths:
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: Создает нового пользователя на основе переданных данных в теле
+        запроса
+      parameters:
+      - description: Запрос
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/serializers.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/serializers.CreateUserResponse'
+      summary: Создание пользователя
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Удаляет пользователя с указанным идентификатором
+      parameters:
+      - description: Id пользователя
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/serializers.DeleteUserResponse'
+      summary: Удаление пользователя
+    put:
+      consumes:
+      - application/json
+      description: Обновляет информацию о пользователе с указанным идентификатором
+      parameters:
+      - description: Id пользователя
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Запрос
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/serializers.UpdateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/serializers.UpdateUserResponse'
+      summary: Обновление данных пользователя
+  /users/info:
+    get:
+      consumes:
+      - application/json
+      description: Возвращает список пользователей с возможностью фильтрации и пагинации
+      parameters:
+      - description: Id пользователя
+        in: query
+        name: id
+        type: string
+      - description: Серия паспорта
+        in: query
+        name: passportSeries
+        type: string
+      - description: Номер паспорта
+        in: query
+        name: passportNumber
+        type: string
+      - description: Имя
+        in: query
+        name: name
+        type: string
+      - description: Фамилия
+        in: query
+        name: surname
+        type: string
+      - description: Отчество
+        in: query
+        name: patronymic
+        type: string
+      - description: Адрес
+        in: query
+        name: address
+        type: string
+      - description: Страница
+        in: query
+        name: page
+        type: integer
+      - description: Кол-во записей на странице
+        in: query
+        name: pageSize
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/serializers.GetUsersResponse'
+      summary: Получение списка пользователей
 swagger: "2.0"
