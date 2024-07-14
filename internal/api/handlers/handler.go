@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log/slog"
 	"timeTracker/internal/api/services"
 
 	"github.com/gin-gonic/gin"
@@ -10,10 +11,14 @@ import (
 
 type Handler struct {
 	services *services.Service
+	logger   *slog.Logger
 }
 
-func NewHandler(services *services.Service) *Handler {
-	return &Handler{services: services}
+func NewHandler(services *services.Service, logger *slog.Logger) *Handler {
+	return &Handler{
+		services: services,
+		logger:   logger,
+	}
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {

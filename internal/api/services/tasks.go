@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"log/slog"
 	"strings"
 	"timeTracker/internal/api/repository"
 	"timeTracker/internal/api/serializers"
@@ -11,35 +12,62 @@ import (
 )
 
 type TaskService struct {
-	repo repository.Task
+	repo   repository.Task
+	logger *slog.Logger
 }
 
-func NewTaskService(repo repository.Task) *TaskService {
-	return &TaskService{repo: repo}
+func NewTaskService(repo repository.Task, logger *slog.Logger) *TaskService {
+	return &TaskService{
+		repo:   repo,
+		logger: logger,
+	}
 }
 
 func (t *TaskService) Create(userId uuid.UUID) (uuid.UUID, error) {
+	t.logger.Debug("Creating task for user", "userId", userId)
+
 	task := &models.Task{
 		Id:     uuid.New(),
 		UserId: userId,
 	}
 
-	return t.repo.Create(task)
+	taskId, err := t.repo.Create(task)
+	if err != nil {
+		t.logger.Error("Failed to create task in repository", "error", err)
+		return uuid.Nil, fmt.Errorf("error creating task: %v", err)
+	}
+
+	t.logger.Info("Task created in repository successfully", "taskId", taskId)
+
+	return taskId, nil
 }
 
 func (t *TaskService) Update(userId uuid.UUID, taskId uuid.UUID) error {
-	return t.repo.Update(userId, taskId)
+	t.logger.Debug("Updating task", "userId", userId, "taskId", taskId)
+
+	if err := t.repo.Update(userId, taskId); err != nil {
+		t.logger.Error("Failed to update task in repository", "error", err)
+		return fmt.Errorf("error updating task: %v", err)
+	}
+
+	t.logger.Info("Task updated in repository successfully", "taskId", taskId)
+
+	return nil
 }
 
 func (t *TaskService) Get(userId uuid.UUID) (*serializers.GetTaskResponse, error) {
+	t.logger.Debug("Getting tasks for user", "userId", userId)
+
 	tasks, err := t.repo.Get(userId)
 	if err != nil {
+		t.logger.Error("Error getting tasks from repository", "error", err)
 		return nil, fmt.Errorf("error getting tasks: %v", err)
 	}
 
+	t.logger.Debug("Tasks retrieved from repository successfully")
+
 	var responseTasks []serializers.Task
 	for _, task := range *tasks {
-
 		responseTasks = append(responseTasks, serializers.Task{
 			Id:        task.Id,
 			UserID:    task.UserId,
@@ -48,9 +76,12 @@ func (t *TaskService) Get(userId uuid.UUID) (*serializers.GetTaskResponse, error
 			Total:     t.formatTotalTime(task.Total),
 		})
 	}
+
 	response := &serializers.GetTaskResponse{
 		Info: responseTasks,
 	}
+
+	t.logger.Info("GetTaskResponse formed successfully", "response", response)
 
 	return response, nil
 }

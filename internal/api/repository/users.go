@@ -121,7 +121,7 @@ func (u *UserRepository) isUserExists(userId uuid.UUID) error {
 	}
 
 	if !exists {
-		return fmt.Errorf("user with ID %v does not exist", userId)
+		return fmt.Errorf("user with ID %v not found", userId)
 	}
 	return nil
 }

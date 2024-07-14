@@ -1,7 +1,8 @@
 package main
 
 import (
-	"log"
+	"log/slog"
+	"os"
 	_ "timeTracker/docs"
 	"timeTracker/internal/api"
 	"timeTracker/internal/api/handlers"
@@ -21,29 +22,37 @@ import (
 func main() {
 	configLoad := config.MustLoad()
 
+	logger := config.SetupLogger(configLoad.Env)
+	slog.SetDefault(logger)
+	slog.Info("starting server", slog.String("env", configLoad.Env))
+	slog.Debug("debug logging enabled")
+
 	db, err := storage.Connect(configLoad)
 	if err != nil {
-		log.Fatalf("Failed to connect to database: %v", err.Error())
+		slog.Error("Failed to connect to database: %v", err)
+		os.Exit(1)
 	}
-	log.Println("Database connected successfully")
+	logger.Info("Database connected successfully")
 
 	sqlDB, err := db.DB()
 	if err != nil {
-		log.Fatalf("Failed to get sql.DB: %v", err)
+		slog.Error("Failed to get sql.DB: %v", err)
+		os.Exit(1)
 	}
 
 	if err := goose.Up(sqlDB, configLoad.Dir); err != nil {
-		log.Fatalf("Failed to apply migrations: %v", err)
+		slog.Error("Failed to apply migrations: %v", err)
+		os.Exit(1)
 	}
 
-	log.Println("Migrations applied successfully")
+	slog.Info("Migrations applied successfully")
 
 	repos := repository.NewRepository(db)
-	services := sv.NewService(repos)
-	handler := handlers.NewHandler(services)
+	services := sv.NewService(repos, logger)
+	handler := handlers.NewHandler(services, logger)
 
 	srv := new(api.Server)
 	if err := srv.Run(configLoad.Address, handler.InitRoutes()); err != nil {
-		log.Fatalf("Something went wrong: %s", err)
+		slog.Info("Something went wrong: %s", err)
 	}
 }

@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"log/slog"
 	"timeTracker/internal/api/repository"
 	"timeTracker/internal/api/serializers"
 
@@ -26,9 +27,9 @@ type Service struct {
 	Task
 }
 
-func NewService(repos *repository.Repository) *Service {
+func NewService(repos *repository.Repository, logger *slog.Logger) *Service {
 	return &Service{
-		User: NewUserService(repos.User),
-		Task: NewTaskService(repos.Task),
+		User: NewUserService(repos.User, logger),
+		Task: NewTaskService(repos.Task, logger),
 	}
 }

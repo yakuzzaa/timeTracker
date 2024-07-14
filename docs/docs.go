@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/tasks/end_timing/{user_id}": {
             "put": {
-                "description": "Обновляет задачу (заканчивает отсчет)",
+                "description": "Updates a task (ends the timer)",
                 "consumes": [
                     "application/json"
                 ],
@@ -27,17 +27,17 @@ const docTemplate = `{
                 "tags": [
                     "tasks"
                 ],
-                "summary": "Обновление задачи",
+                "summary": "Update task",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "id пользователя",
+                        "description": "User ID",
                         "name": "user_id",
                         "in": "path",
                         "required": true
                     },
                     {
-                        "description": "Запрос",
+                        "description": "Request",
                         "name": "input",
                         "in": "body",
                         "required": true,
@@ -52,13 +52,31 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/serializers.UpdateTaskResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
                     }
                 }
             }
         },
         "/tasks/start_timing/{user_id}": {
             "post": {
-                "description": "Создает новую задачу для пользователя и начинает отсчет",
+                "description": "Creates a new task for a user and starts the timer",
                 "consumes": [
                     "application/json"
                 ],
@@ -68,11 +86,11 @@ const docTemplate = `{
                 "tags": [
                     "tasks"
                 ],
-                "summary": "Создание задачи",
+                "summary": "Create task",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "id пользователя",
+                        "description": "User ID",
                         "name": "user_id",
                         "in": "path",
                         "required": true
@@ -84,13 +102,25 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/serializers.CreateTaskResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
                     }
                 }
             }
         },
         "/tasks/{user_id}": {
             "get": {
-                "description": "Получить все задачи пользователся, отсортированные по убыванию затраченного времени",
+                "description": "Retrieves all tasks of a user, sorted by descending total time spent",
                 "consumes": [
                     "application/json"
                 ],
@@ -100,11 +130,11 @@ const docTemplate = `{
                 "tags": [
                     "tasks"
                 ],
-                "summary": "Получение задач",
+                "summary": "Get tasks",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "id пользователя",
+                        "description": "User ID",
                         "name": "user_id",
                         "in": "path",
                         "required": true
@@ -116,13 +146,25 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/serializers.GetTaskResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
                     }
                 }
             }
         },
         "/users": {
             "post": {
-                "description": "Создает нового пользователя на основе переданных данных в теле запроса",
+                "description": "Create a new user based on the data provided in the request body",
                 "consumes": [
                     "application/json"
                 ],
@@ -132,10 +174,10 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Создание пользователя",
+                "summary": "Create a user",
                 "parameters": [
                     {
-                        "description": "Запрос",
+                        "description": "Request",
                         "name": "input",
                         "in": "body",
                         "required": true,
@@ -150,13 +192,25 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/serializers.CreateUserResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
                     }
                 }
             }
         },
         "/users/info": {
             "get": {
-                "description": "Возвращает список пользователей с возможностью фильтрации и пагинации",
+                "description": "Returns a list of users with optional filtering and pagination capabilities",
                 "consumes": [
                     "application/json"
                 ],
@@ -166,59 +220,59 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Получение списка пользователей",
+                "summary": "Retrieve a list of users",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Id пользователя",
+                        "description": "User ID",
                         "name": "id",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Серия паспорта",
+                        "description": "Passport series",
                         "name": "passportSeries",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Номер паспорта",
+                        "description": "Passport number",
                         "name": "passportNumber",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Имя",
+                        "description": "Name",
                         "name": "name",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Фамилия",
+                        "description": "Surname",
                         "name": "surname",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Отчество",
+                        "description": "Patronymic",
                         "name": "patronymic",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Адрес",
+                        "description": "Address",
                         "name": "address",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "Страница",
+                        "description": "Page number",
                         "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "Кол-во записей на странице",
+                        "description": "Number of records per page",
                         "name": "pageSize",
                         "in": "query"
                     }
@@ -229,13 +283,25 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/serializers.GetUsersResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
                     }
                 }
             }
         },
         "/users/{id}": {
             "put": {
-                "description": "Обновляет информацию о пользователе с указанным идентификатором",
+                "description": "Updates information of the user with the specified identifier",
                 "consumes": [
                     "application/json"
                 ],
@@ -245,17 +311,17 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Обновление данных пользователя",
+                "summary": "Update user data",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Id пользователя",
+                        "description": "User ID",
                         "name": "id",
                         "in": "path",
                         "required": true
                     },
                     {
-                        "description": "Запрос",
+                        "description": "Request",
                         "name": "input",
                         "in": "body",
                         "required": true,
@@ -270,11 +336,29 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/serializers.UpdateUserResponse"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
                     }
                 }
             },
             "delete": {
-                "description": "Удаляет пользователя с указанным идентификатором",
+                "description": "Deletes the user with the specified identifier",
                 "consumes": [
                     "application/json"
                 ],
@@ -284,11 +368,11 @@ const docTemplate = `{
                 "tags": [
                     "users"
                 ],
-                "summary": "Удаление пользователя",
+                "summary": "Delete user",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Id пользователя",
+                        "description": "User ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -299,6 +383,24 @@ const docTemplate = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/serializers.DeleteUserResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.ErrorResponse"
                         }
                     }
                 }
@@ -340,6 +442,17 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "status": {
+                    "type": "string"
+                }
+            }
+        },
+        "serializers.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "error": {
+                    "type": "string"
+                },
+                "message": {
                     "type": "string"
                 }
             }

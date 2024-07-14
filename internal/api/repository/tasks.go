@@ -66,7 +66,7 @@ func (t *TaskRepository) isUserTaskExist(userId, taskId uuid.UUID) error {
 	}
 
 	if !exists {
-		return fmt.Errorf("task with ID %v does not exist for user with ID %v", taskId, userId)
+		return fmt.Errorf("task with ID %v not found for user with ID %v", taskId, userId)
 	}
 	return nil
 }
