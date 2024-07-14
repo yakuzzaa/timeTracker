@@ -12,6 +12,7 @@ import (
 // @Description Создает новую задачу для пользователя и начинает отсчет
 // @Accept json
 // @Produce json
+// @Tags tasks
 // @Param user_id path string true "id пользователя"
 // @Success 201 {object} serializers.CreateTaskResponse
 // @Router /tasks/start_timing/{user_id} [post]
@@ -34,6 +35,7 @@ func (h *Handler) startTiming(c *gin.Context) {
 // @Description Обновляет задачу (заканчивает отсчет)
 // @Accept json
 // @Produce json
+// @Tags tasks
 // @Param user_id path string true "id пользователя"
 // @Param input body serializers.UpdateTaskRequest true "Запрос"
 // @Success 200 {object} serializers.UpdateTaskResponse
@@ -62,6 +64,7 @@ func (h *Handler) endTiming(c *gin.Context) {
 // @Description Получить все задачи пользователся, отсортированные по убыванию затраченного времени
 // @Accept json
 // @Produce json
+// @Tags tasks
 // @Param user_id path string true "id пользователя"
 // @Success 200 {object} serializers.GetTaskResponse
 // @Router /tasks/{user_id} [get]

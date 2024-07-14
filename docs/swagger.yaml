@@ -125,6 +125,8 @@ paths:
           schema:
             $ref: '#/definitions/serializers.GetTaskResponse'
       summary: Получение задач
+      tags:
+      - tasks
   /tasks/end_timing/{user_id}:
     put:
       consumes:
@@ -150,6 +152,8 @@ paths:
           schema:
             $ref: '#/definitions/serializers.UpdateTaskResponse'
       summary: Обновление задачи
+      tags:
+      - tasks
   /tasks/start_timing/{user_id}:
     post:
       consumes:
@@ -169,6 +173,8 @@ paths:
           schema:
             $ref: '#/definitions/serializers.CreateTaskResponse'
       summary: Создание задачи
+      tags:
+      - tasks
   /users:
     post:
       consumes:
@@ -190,6 +196,8 @@ paths:
           schema:
             $ref: '#/definitions/serializers.CreateUserResponse'
       summary: Создание пользователя
+      tags:
+      - users
   /users/{id}:
     delete:
       consumes:
@@ -209,6 +217,8 @@ paths:
           schema:
             $ref: '#/definitions/serializers.DeleteUserResponse'
       summary: Удаление пользователя
+      tags:
+      - users
     put:
       consumes:
       - application/json
@@ -233,6 +243,8 @@ paths:
           schema:
             $ref: '#/definitions/serializers.UpdateUserResponse'
       summary: Обновление данных пользователя
+      tags:
+      - users
   /users/info:
     get:
       consumes:
@@ -283,4 +295,6 @@ paths:
           schema:
             $ref: '#/definitions/serializers.GetUsersResponse'
       summary: Получение списка пользователей
+      tags:
+      - users
 swagger: "2.0"

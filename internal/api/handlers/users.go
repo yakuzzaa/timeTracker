@@ -12,6 +12,7 @@ import (
 // @Description Создает нового пользователя на основе переданных данных в теле запроса
 // @Accept json
 // @Produce json
+// @Tags users
 // @Param input body serializers.CreateUserRequest true "Запрос"
 // @Success 201 {object} serializers.CreateUserResponse
 // @Router /users [post]
@@ -38,6 +39,7 @@ func (h *Handler) createUser(c *gin.Context) {
 // @Description Возвращает список пользователей с возможностью фильтрации и пагинации
 // @Accept json
 // @Produce json
+// @Tags users
 // @Param id query string false "Id пользователя"
 // @Param passportSeries query string false "Серия паспорта"
 // @Param passportNumber query string false "Номер паспорта"
@@ -84,6 +86,7 @@ func (h *Handler) info(c *gin.Context) {
 // @Description Обновляет информацию о пользователе с указанным идентификатором
 // @Accept json
 // @Produce json
+// @Tags users
 // @Param id path string true "Id пользователя"
 // @Param input body serializers.UpdateUserRequest true "Запрос"
 // @Success 200 {object} serializers.UpdateUserResponse
@@ -114,6 +117,7 @@ func (h *Handler) updateUser(c *gin.Context) {
 // @Description Удаляет пользователя с указанным идентификатором
 // @Accept json
 // @Produce json
+// @Tags users
 // @Param id path string true "Id пользователя"
 // @Success 200 {object} serializers.DeleteUserResponse
 // @Router /users/{id} [delete]

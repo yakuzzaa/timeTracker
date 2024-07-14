@@ -24,6 +24,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "tasks"
+                ],
                 "summary": "Обновление задачи",
                 "parameters": [
                     {
@@ -62,6 +65,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "tasks"
+                ],
                 "summary": "Создание задачи",
                 "parameters": [
                     {
@@ -91,6 +97,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "tasks"
+                ],
                 "summary": "Получение задач",
                 "parameters": [
                     {
@@ -119,6 +128,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "users"
                 ],
                 "summary": "Создание пользователя",
                 "parameters": [
@@ -150,6 +162,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "users"
                 ],
                 "summary": "Получение списка пользователей",
                 "parameters": [
@@ -227,6 +242,9 @@ const docTemplate = `{
                 "produces": [
                     "application/json"
                 ],
+                "tags": [
+                    "users"
+                ],
                 "summary": "Обновление данных пользователя",
                 "parameters": [
                     {
@@ -262,6 +280,9 @@ const docTemplate = `{
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "users"
                 ],
                 "summary": "Удаление пользователя",
                 "parameters": [

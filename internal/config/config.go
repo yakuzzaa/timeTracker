@@ -10,25 +10,25 @@ import (
 )
 
 type Config struct {
-	Env        string `yaml:"env" env-default:"local" env-required:"true"`
+	Env        string `yaml:"env" env:"ENV" default:"local" required:"true"`
 	HTTPServer `yaml:"http_server"`
 	Database   `yaml:"db"`
 }
 
 type HTTPServer struct {
-	Address     string        `yaml:"address" env-required:"true"`
-	Timeout     time.Duration `yaml:"timeout" env-required:"true"`
-	IdleTimeout time.Duration `yaml:"idle_timeout" env-required:"true"`
+	Address     string        `yaml:"address" env:"HTTP_SERVER_ADDRESS" required:"true"`
+	Timeout     time.Duration `yaml:"timeout" env:"HTTP_SERVER_TIMEOUT" required:"true"`
+	IdleTimeout time.Duration `yaml:"idle_timeout" env:"HTTP_SERVER_IDLE_TIMEOUT" required:"true"`
 }
 
 type Database struct {
-	DBHost     string `yaml:"db_host" env-required:"true"`
-	DBPort     string `yaml:"db_port" env-required:"true"`
-	DBUser     string `yaml:"db_user" env-required:"true"`
-	DBPassword string `yaml:"db_password" env-required:"true"`
-	DBName     string `yaml:"db_name" env-required:"true"`
-	Driver     string `yaml:"driver" env-required:"true"`
-	Dir        string `yaml:"dir" env-required:"true"`
+	DBHost     string `yaml:"db_host" env:"DB_HOST" required:"true"`
+	DBPort     string `yaml:"db_port" env:"DB_PORT" required:"true"`
+	DBUser     string `yaml:"db_user" env:"DB_USER" required:"true"`
+	DBPassword string `yaml:"db_password" env:"DB_PASSWORD" required:"true"`
+	DBName     string `yaml:"db_name" env:"DB_NAME" required:"true"`
+	Driver     string `yaml:"driver" env:"DB_DRIVER" required:"true"`
+	Dir        string `yaml:"dir" env:"DB_MIGRATIONS_DIR" required:"true"`
 }
 
 func (db *Database) DSN() string {
