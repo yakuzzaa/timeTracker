@@ -91,7 +91,7 @@ func (h *Handler) info(c *gin.Context) {
 func (h *Handler) updateUser(c *gin.Context) {
 	userId, err := uuid.Parse(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user ID"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid UUID format"})
 		return
 	}
 
@@ -120,7 +120,7 @@ func (h *Handler) updateUser(c *gin.Context) {
 func (h *Handler) deleteUser(c *gin.Context) {
 	userId, err := uuid.Parse(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid user ID"})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid UUID format"})
 		return
 	}
 

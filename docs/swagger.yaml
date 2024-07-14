@@ -1,5 +1,12 @@
 basePath: /api
 definitions:
+  serializers.CreateTaskResponse:
+    properties:
+      id:
+        type: string
+      status:
+        type: string
+    type: object
   serializers.CreateUserRequest:
     properties:
       passport:
@@ -17,12 +24,42 @@ definitions:
       status:
         type: string
     type: object
+  serializers.GetTaskResponse:
+    properties:
+      info:
+        items:
+          $ref: '#/definitions/serializers.Task'
+        type: array
+    type: object
   serializers.GetUsersResponse:
     properties:
       info:
         items:
           $ref: '#/definitions/serializers.User'
         type: array
+    type: object
+  serializers.Task:
+    properties:
+      endTime:
+        type: string
+      id:
+        type: string
+      startTime:
+        type: string
+      total:
+        type: string
+      userID:
+        type: string
+    type: object
+  serializers.UpdateTaskRequest:
+    properties:
+      task_id:
+        type: string
+    type: object
+  serializers.UpdateTaskResponse:
+    properties:
+      status:
+        type: string
     type: object
   serializers.UpdateUserRequest:
     properties:
@@ -68,6 +105,70 @@ info:
   title: TimeTracker API
   version: "1.0"
 paths:
+  /tasks/{user_id}:
+    get:
+      consumes:
+      - application/json
+      description: Получить все задачи пользователся, отсортированные по убыванию
+        затраченного времени
+      parameters:
+      - description: id пользователя
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/serializers.GetTaskResponse'
+      summary: Получение задач
+  /tasks/end_timing/{user_id}:
+    put:
+      consumes:
+      - application/json
+      description: Обновляет задачу (заканчивает отсчет)
+      parameters:
+      - description: id пользователя
+        in: path
+        name: user_id
+        required: true
+        type: string
+      - description: Запрос
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/serializers.UpdateTaskRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/serializers.UpdateTaskResponse'
+      summary: Обновление задачи
+  /tasks/start_timing/{user_id}:
+    post:
+      consumes:
+      - application/json
+      description: Создает новую задачу для пользователя и начинает отсчет
+      parameters:
+      - description: id пользователя
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/serializers.CreateTaskResponse'
+      summary: Создание задачи
   /users:
     post:
       consumes:

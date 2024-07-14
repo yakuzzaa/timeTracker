@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"fmt"
 	"timeTracker/internal/api/repository"
 	"timeTracker/internal/api/serializers"
 	"timeTracker/internal/storage/models"
@@ -38,7 +39,7 @@ func (u *UserService) Create(passport serializers.Passport) (uuid.UUID, error) {
 func (u *UserService) Get(filters serializers.GetUsersRequest) (*serializers.GetUsersResponse, error) {
 	users, err := u.repo.Get(filters)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("error getting users: %v", err)
 	}
 
 	var responseUsers []serializers.User

@@ -49,9 +49,6 @@ type UpdateUserResponse struct {
 	Status string `json:"status"`
 }
 
-type DeleteUserRequest struct {
-	Id uuid.UUID `json:"id"`
-}
 type DeleteUserResponse struct {
 	Status string `json:"status"`
 }

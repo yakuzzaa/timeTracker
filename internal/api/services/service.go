@@ -4,7 +4,6 @@ import (
 	"context"
 	"timeTracker/internal/api/repository"
 	"timeTracker/internal/api/serializers"
-	"timeTracker/internal/storage/models"
 
 	"github.com/google/uuid"
 )
@@ -17,9 +16,9 @@ type User interface {
 }
 
 type Task interface {
-	Create(userId uuid.UUID) (models.Task, error)
-	Update(userId uuid.UUID, taskId uuid.UUID) (models.Task, error)
-	Get(userId uuid.UUID) (models.Task, error)
+	Create(userId uuid.UUID) (uuid.UUID, error)
+	Update(userId uuid.UUID, taskId uuid.UUID) error
+	Get(userId uuid.UUID) (*serializers.GetTaskResponse, error)
 }
 
 type Service struct {
@@ -30,6 +29,6 @@ type Service struct {
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		User: NewUserService(repos.User),
-		//Task: NewTaskService(repos.Task),
+		Task: NewTaskService(repos.Task),
 	}
 }

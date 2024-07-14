@@ -17,9 +17,9 @@ type User interface {
 }
 
 type Task interface {
-	Create(userId uuid.UUID) (models.Task, error)
-	Update(userId uuid.UUID, taskId uuid.UUID) (models.Task, error)
-	Get(userId uuid.UUID) (models.Task, error)
+	Create(task *models.Task) (uuid.UUID, error)
+	Update(userId uuid.UUID, taskId uuid.UUID) error
+	Get(userId uuid.UUID) (*[]models.Task, error)
 }
 
 type Repository struct {
@@ -30,6 +30,6 @@ type Repository struct {
 func NewRepository(db *gorm.DB) *Repository {
 	return &Repository{
 		User: NewUserRepository(db),
-		//Task: NewTaskRepository(db),
+		Task: NewTaskRepository(db),
 	}
 }

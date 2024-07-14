@@ -12,7 +12,7 @@ CREATE TABLE tasks (
 CREATE OR REPLACE FUNCTION set_end_time_and_total() RETURNS TRIGGER AS $set_end_time_and_total$
 BEGIN
     NEW.end_time = CURRENT_TIMESTAMP;
-    NEW.total = EXTRACT(EPOCH FROM (NEW.end_time - NEW.start_time)) / 60;
+    NEW.total = EXTRACT(EPOCH FROM (NEW.end_time - NEW.start_time));
     RETURN NEW;
 END;
 $set_end_time_and_total$ LANGUAGE plpgsql;

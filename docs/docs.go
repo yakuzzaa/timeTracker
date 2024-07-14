@@ -15,6 +15,102 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/tasks/end_timing/{user_id}": {
+            "put": {
+                "description": "Обновляет задачу (заканчивает отсчет)",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Обновление задачи",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id пользователя",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Запрос",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/serializers.UpdateTaskRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.UpdateTaskResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/start_timing/{user_id}": {
+            "post": {
+                "description": "Создает новую задачу для пользователя и начинает отсчет",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Создание задачи",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id пользователя",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.CreateTaskResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{user_id}": {
+            "get": {
+                "description": "Получить все задачи пользователся, отсортированные по убыванию затраченного времени",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "summary": "Получение задач",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id пользователя",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/serializers.GetTaskResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/users": {
             "post": {
                 "description": "Создает нового пользователя на основе переданных данных в теле запроса",
@@ -189,6 +285,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "serializers.CreateTaskResponse": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                }
+            }
+        },
         "serializers.CreateUserRequest": {
             "type": "object",
             "required": [
@@ -216,6 +323,17 @@ const docTemplate = `{
                 }
             }
         },
+        "serializers.GetTaskResponse": {
+            "type": "object",
+            "properties": {
+                "info": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/serializers.Task"
+                    }
+                }
+            }
+        },
         "serializers.GetUsersResponse": {
             "type": "object",
             "properties": {
@@ -224,6 +342,42 @@ const docTemplate = `{
                     "items": {
                         "$ref": "#/definitions/serializers.User"
                     }
+                }
+            }
+        },
+        "serializers.Task": {
+            "type": "object",
+            "properties": {
+                "endTime": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "startTime": {
+                    "type": "string"
+                },
+                "total": {
+                    "type": "string"
+                },
+                "userID": {
+                    "type": "string"
+                }
+            }
+        },
+        "serializers.UpdateTaskRequest": {
+            "type": "object",
+            "properties": {
+                "task_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "serializers.UpdateTaskResponse": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
                 }
             }
         },
