@@ -3,8 +3,9 @@ package services
 import (
 	"context"
 	"log/slog"
-	"timeTracker/internal/api/repository"
-	"timeTracker/internal/api/serializers"
+
+	"github.com/yakuzzaa/timeTracker/internal/api/repository"
+	"github.com/yakuzzaa/timeTracker/internal/api/serializers"
 
 	"github.com/google/uuid"
 )

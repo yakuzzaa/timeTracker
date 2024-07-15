@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"timeTracker/internal/config"
+	"github.com/yakuzzaa/timeTracker/internal/config"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"

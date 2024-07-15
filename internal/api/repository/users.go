@@ -3,8 +3,9 @@ package repository
 import (
 	"context"
 	"fmt"
-	"timeTracker/internal/api/serializers"
-	"timeTracker/internal/storage/models"
+
+	"github.com/yakuzzaa/timeTracker/internal/api/serializers"
+	"github.com/yakuzzaa/timeTracker/internal/storage/models"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"

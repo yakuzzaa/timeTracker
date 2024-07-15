@@ -2,7 +2,8 @@ package repository
 
 import (
 	"fmt"
-	"timeTracker/internal/storage/models"
+
+	"github.com/yakuzzaa/timeTracker/internal/storage/models"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"

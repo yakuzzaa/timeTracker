@@ -2,7 +2,8 @@ package repository
 
 import (
 	"errors"
-	"timeTracker/internal/api/serializers"
+
+	"github.com/yakuzzaa/timeTracker/internal/api/serializers"
 
 	"github.com/google/uuid"
 )

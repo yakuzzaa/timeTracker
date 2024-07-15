@@ -2,7 +2,8 @@ package handlers
 
 import (
 	"log/slog"
-	"timeTracker/internal/api/services"
+
+	"github.com/yakuzzaa/timeTracker/internal/api/services"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"

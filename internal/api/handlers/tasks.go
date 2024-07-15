@@ -3,7 +3,8 @@ package handlers
 import (
 	"net/http"
 	"strings"
-	"timeTracker/internal/api/serializers"
+
+	"github.com/yakuzzaa/timeTracker/internal/api/serializers"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"

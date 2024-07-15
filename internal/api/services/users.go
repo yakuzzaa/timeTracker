@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
-	"timeTracker/internal/api/repository"
-	"timeTracker/internal/api/serializers"
-	"timeTracker/internal/storage/models"
+
+	"github.com/yakuzzaa/timeTracker/internal/api/repository"
+	"github.com/yakuzzaa/timeTracker/internal/api/serializers"
+	"github.com/yakuzzaa/timeTracker/internal/storage/models"
 
 	"github.com/google/uuid"
 )

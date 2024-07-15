@@ -3,13 +3,14 @@ package main
 import (
 	"log/slog"
 	"os"
-	_ "timeTracker/docs"
-	"timeTracker/internal/api"
-	"timeTracker/internal/api/handlers"
-	"timeTracker/internal/api/repository"
-	sv "timeTracker/internal/api/services"
-	"timeTracker/internal/config"
-	"timeTracker/internal/storage"
+
+	_ "github.com/yakuzzaa/timeTracker/docs"
+	"github.com/yakuzzaa/timeTracker/internal/api"
+	"github.com/yakuzzaa/timeTracker/internal/api/handlers"
+	"github.com/yakuzzaa/timeTracker/internal/api/repository"
+	sv "github.com/yakuzzaa/timeTracker/internal/api/services"
+	"github.com/yakuzzaa/timeTracker/internal/config"
+	"github.com/yakuzzaa/timeTracker/internal/storage"
 
 	"github.com/pressly/goose/v3"
 )
