@@ -11,6 +11,7 @@ import (
 
 type Config struct {
 	Env        string `yaml:"env" env:"ENV" default:"local" required:"true"`
+	LogPath    string `yaml:"log_path" env:"LOG_PATH" default:"logs/" required:"true"`
 	HTTPServer `yaml:"http_server"`
 	Database   `yaml:"db"`
 }

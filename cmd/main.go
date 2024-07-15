@@ -22,7 +22,7 @@ import (
 func main() {
 	configLoad := config.MustLoad()
 
-	logger := config.SetupLogger(configLoad.Env)
+	logger := config.SetupLogger(configLoad.Env, configLoad.LogPath)
 	slog.SetDefault(logger)
 	slog.Info("starting server", slog.String("env", configLoad.Env))
 	slog.Debug("debug logging enabled")
