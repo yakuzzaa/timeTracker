@@ -4,10 +4,9 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/yakuzzaa/timeTracker/internal/api/serializers"
-	"github.com/yakuzzaa/timeTracker/internal/storage/models"
-
 	"github.com/google/uuid"
+	"github.com/yakuzzaa/timeTracker/internal/api/serializers"
+	"github.com/yakuzzaa/timeTracker/internal/models"
 	"gorm.io/gorm"
 )
 

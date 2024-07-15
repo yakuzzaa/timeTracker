@@ -3,9 +3,8 @@ package repository
 import (
 	"fmt"
 
-	"github.com/yakuzzaa/timeTracker/internal/storage/models"
-
 	"github.com/google/uuid"
+	"github.com/yakuzzaa/timeTracker/internal/models"
 	"gorm.io/gorm"
 )
 

@@ -10,7 +10,6 @@ import (
 	"github.com/yakuzzaa/timeTracker/internal/api/repository"
 	sv "github.com/yakuzzaa/timeTracker/internal/api/services"
 	"github.com/yakuzzaa/timeTracker/internal/config"
-	"github.com/yakuzzaa/timeTracker/internal/storage"
 
 	"github.com/pressly/goose/v3"
 )
@@ -28,7 +27,7 @@ func main() {
 	slog.Info("starting server", slog.String("env", configLoad.Env))
 	slog.Debug("debug logging enabled")
 
-	db, err := storage.Connect(configLoad)
+	db, err := config.DbConnect(configLoad)
 	if err != nil {
 		slog.Error("Failed to connect to database: %v", err)
 		os.Exit(1)
@@ -49,6 +48,7 @@ func main() {
 	slog.Info("Migrations applied successfully")
 
 	repos := repository.NewRepository(db)
+
 	services := sv.NewService(repos, logger)
 	handler := handlers.NewHandler(services, logger)
 

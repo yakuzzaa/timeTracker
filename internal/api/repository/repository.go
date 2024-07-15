@@ -3,24 +3,23 @@ package repository
 import (
 	"context"
 
-	"github.com/yakuzzaa/timeTracker/internal/api/serializers"
-	"github.com/yakuzzaa/timeTracker/internal/storage/models"
-
 	"github.com/google/uuid"
+	"github.com/yakuzzaa/timeTracker/internal/api/serializers"
+	models2 "github.com/yakuzzaa/timeTracker/internal/models"
 	"gorm.io/gorm"
 )
 
 type User interface {
-	Create(user *models.User) (uuid.UUID, error)
-	Get(filters serializers.GetUsersRequest) (*[]models.User, error)
-	Update(userId uuid.UUID, user *models.User) error
+	Create(user *models2.User) (uuid.UUID, error)
+	Get(filters serializers.GetUsersRequest) (*[]models2.User, error)
+	Update(userId uuid.UUID, user *models2.User) error
 	Delete(ctx context.Context, userId uuid.UUID) error
 }
 
 type Task interface {
-	Create(task *models.Task) (uuid.UUID, error)
+	Create(task *models2.Task) (uuid.UUID, error)
 	Update(userId uuid.UUID, taskId uuid.UUID) error
-	Get(userId uuid.UUID) (*[]models.Task, error)
+	Get(userId uuid.UUID) (*[]models2.Task, error)
 }
 
 type Repository struct {

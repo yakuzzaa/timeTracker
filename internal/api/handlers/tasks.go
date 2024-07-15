@@ -49,7 +49,7 @@ func (h *Handler) startTiming(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, serializers.CreateTaskResponse{
 		Id:     taskId,
-		Status: "Отсчет начат",
+		Status: "Start timing",
 	})
 }
 
@@ -111,7 +111,7 @@ func (h *Handler) endTiming(c *gin.Context) {
 
 	h.logger.Info("Task updated successfully", "taskId", req.Id)
 
-	c.JSON(http.StatusOK, serializers.UpdateTaskResponse{Status: "Отсчет закончен"})
+	c.JSON(http.StatusOK, serializers.UpdateTaskResponse{Status: "End timing"})
 }
 
 // @Summary Get tasks
